@@ -961,7 +961,7 @@ class Grid extends React.PureComponent<Props, State> {
   }
 
   render() {
-    console.log("This is grid", this.props)
+    console.log("This is the grid", this.props)
     const {
       autoContainerWidth,
       autoHeight,
