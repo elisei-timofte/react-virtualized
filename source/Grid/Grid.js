@@ -977,6 +977,7 @@ class Grid extends React.PureComponent<Props, State> {
       style,
       tabIndex,
       width,
+      listWrapper,
     } = this.props;
     const {instanceProps, needToResetStyleCache} = this.state;
 
@@ -1069,7 +1070,7 @@ class Grid extends React.PureComponent<Props, State> {
               position: 'relative',
               ...containerStyle,
             }}>
-            {childrenToDisplay}
+            {listWrapper(childrenToDisplay)}
           </div>
         )}
         {showNoContentRenderer && noContentRenderer()}
