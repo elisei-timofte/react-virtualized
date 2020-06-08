@@ -4892,7 +4892,9 @@
                   this.state.isScrolling || this._resetStyleCache(),
                   this._calculateChildrenToRender(this.props, this.state);
                 var totalColumnsWidth = instanceProps.columnSizeAndPositionManager.getTotalSize(),
-                  totalRowsHeight = instanceProps.rowSizeAndPositionManager.getTotalSize(),
+                  totalRowsHeight =
+                    instanceProps.rowSizeAndPositionManager.getTotalSize() +
+                      rowHeight || 200,
                   verticalScrollBarSize =
                     height < totalRowsHeight ? instanceProps.scrollbarSize : 0,
                   horizontalScrollBarSize =
@@ -4931,30 +4933,28 @@
                       tabIndex: tabIndex,
                     },
                   ),
-                  0 < childrenToDisplay.length &&
-                    React.createElement(
-                      'div',
-                      {
-                        className:
-                          'ReactVirtualized__Grid__innerScrollContainer',
-                        role: containerRole,
-                        style: _objectSpread2(
-                          {
-                            width: autoContainerWidth
-                              ? 'auto'
-                              : totalColumnsWidth,
-                            height: totalRowsHeight,
-                            maxWidth: totalColumnsWidth,
-                            maxHeight: totalRowsHeight,
-                            overflow: 'hidden',
-                            pointerEvents: isScrolling ? 'none' : '',
-                            position: 'relative',
-                          },
-                          containerStyle,
-                        ),
-                      },
-                      listWrapper(childrenToDisplay),
-                    ),
+                  React.createElement(
+                    'div',
+                    {
+                      className: 'ReactVirtualized__Grid__innerScrollContainer',
+                      role: containerRole,
+                      style: _objectSpread2(
+                        {
+                          width: autoContainerWidth
+                            ? 'auto'
+                            : totalColumnsWidth,
+                          height: totalRowsHeight,
+                          maxWidth: totalColumnsWidth,
+                          maxHeight: totalRowsHeight,
+                          overflow: 'hidden',
+                          pointerEvents: isScrolling ? 'none' : '',
+                          position: 'relative',
+                        },
+                        containerStyle,
+                      ),
+                    },
+                    listWrapper(childrenToDisplay),
+                  ),
                   showNoContentRenderer && noContentRenderer(),
                 );
               },

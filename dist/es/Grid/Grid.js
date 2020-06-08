@@ -904,7 +904,9 @@ var Grid =
               this._calculateChildrenToRender(this.props, this.state);
 
               var totalColumnsWidth = instanceProps.columnSizeAndPositionManager.getTotalSize();
-              var totalRowsHeight = instanceProps.rowSizeAndPositionManager.getTotalSize(); // Force browser to hide scrollbars when we know they aren't necessary.
+              var totalRowsHeight =
+                instanceProps.rowSizeAndPositionManager.getTotalSize() +
+                  rowHeight || 200; // Force browser to hide scrollbars when we know they aren't necessary.
               // Otherwise once scrollbars appear they may not disappear again.
               // For more info see issue #116
 
@@ -955,29 +957,26 @@ var Grid =
                     tabIndex: tabIndex,
                   },
                 ),
-                childrenToDisplay.length > 0 &&
-                  React.createElement(
-                    'div',
-                    {
-                      className: 'ReactVirtualized__Grid__innerScrollContainer',
-                      role: containerRole,
-                      style: _objectSpread(
-                        {
-                          width: autoContainerWidth
-                            ? 'auto'
-                            : totalColumnsWidth,
-                          height: totalRowsHeight,
-                          maxWidth: totalColumnsWidth,
-                          maxHeight: totalRowsHeight,
-                          overflow: 'hidden',
-                          pointerEvents: isScrolling ? 'none' : '',
-                          position: 'relative',
-                        },
-                        containerStyle,
-                      ),
-                    },
-                    listWrapper(childrenToDisplay),
-                  ),
+                React.createElement(
+                  'div',
+                  {
+                    className: 'ReactVirtualized__Grid__innerScrollContainer',
+                    role: containerRole,
+                    style: _objectSpread(
+                      {
+                        width: autoContainerWidth ? 'auto' : totalColumnsWidth,
+                        height: totalRowsHeight,
+                        maxWidth: totalColumnsWidth,
+                        maxHeight: totalRowsHeight,
+                        overflow: 'hidden',
+                        pointerEvents: isScrolling ? 'none' : '',
+                        position: 'relative',
+                      },
+                      containerStyle,
+                    ),
+                  },
+                  listWrapper(childrenToDisplay),
+                ),
                 showNoContentRenderer && noContentRenderer(),
               );
             },

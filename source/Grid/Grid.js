@@ -961,7 +961,7 @@ class Grid extends React.PureComponent<Props, State> {
   }
 
   render() {
-    console.log("This is the grid", this.props)
+    console.log('This is the grid', this.props);
     const {
       autoContainerWidth,
       autoHeight,
@@ -1007,7 +1007,8 @@ class Grid extends React.PureComponent<Props, State> {
     this._calculateChildrenToRender(this.props, this.state);
 
     const totalColumnsWidth = instanceProps.columnSizeAndPositionManager.getTotalSize();
-    const totalRowsHeight = instanceProps.rowSizeAndPositionManager.getTotalSize();
+    const totalRowsHeight =
+      instanceProps.rowSizeAndPositionManager.getTotalSize() + rowHeight || 200;
 
     // Force browser to hide scrollbars when we know they aren't necessary.
     // Otherwise once scrollbars appear they may not disappear again.
@@ -1056,23 +1057,21 @@ class Grid extends React.PureComponent<Props, State> {
           ...style,
         }}
         tabIndex={tabIndex}>
-        {childrenToDisplay.length > 0 && (
-          <div
-            className="ReactVirtualized__Grid__innerScrollContainer"
-            role={containerRole}
-            style={{
-              width: autoContainerWidth ? 'auto' : totalColumnsWidth,
-              height: totalRowsHeight,
-              maxWidth: totalColumnsWidth,
-              maxHeight: totalRowsHeight,
-              overflow: 'hidden',
-              pointerEvents: isScrolling ? 'none' : '',
-              position: 'relative',
-              ...containerStyle,
-            }}>
-            {listWrapper(childrenToDisplay)}
-          </div>
-        )}
+        <div
+          className="ReactVirtualized__Grid__innerScrollContainer"
+          role={containerRole}
+          style={{
+            width: autoContainerWidth ? 'auto' : totalColumnsWidth,
+            height: totalRowsHeight,
+            maxWidth: totalColumnsWidth,
+            maxHeight: totalRowsHeight,
+            overflow: 'hidden',
+            pointerEvents: isScrolling ? 'none' : '',
+            position: 'relative',
+            ...containerStyle,
+          }}>
+          {listWrapper(childrenToDisplay)}
+        </div>
         {showNoContentRenderer && noContentRenderer()}
       </div>
     );
